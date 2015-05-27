@@ -4,9 +4,7 @@
 #include <ostream>
 
  /*
-  *const string NC = "\E[0m"; // No Color (reset to default)
   *const string HOME_CURSOR  = "\E[0;0H"; // Place the cursor at 0;0 position.
-  *const string CLEAR_SCREEN = "\E[2J";
   */
 
 namespace Color {
