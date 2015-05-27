@@ -11,16 +11,17 @@
 
 namespace Color {
   enum Tipe {
-    RESET             = 0,
-    BRIGHT            = 1,
-    DIM               = 2,
+    RESET             =  0,
+    BRIGHT            =  1,
+    DIM               =  2,
     UK03                = 3,
-    UNDERSCORE        = 4,
-    BLINK             = 5,
+    UNDERSCORE        =  4,
+    BLINK             =  5,
     UK06                = 6,
-    REVERSE           = 7,
-    HIDDEN            = 8,
-    STRIKEOUT         = 9
+    REVERSE           =  7,
+    HIDDEN            =  8,
+    STRIKEOUT         =  9
+    CLEAR_SCR         = 10 //Nnot directly represented in the terminal
     };
 
   enum FColor {
@@ -79,7 +80,12 @@ namespace Color {
 
       friend std::ostream&
       std::ostream& print(std::ostream& out) const{
-        return out << "\E[" << f.t << ';' << f.fg << ';' << f.bg << "m";
+        if (this->t == Tipe.CLEAR_SCR) {
+          out << "\E[2J";
+        } else {
+          out << "\E[" << this->t << ';' << this->fg << ';' << this->bg << "m";
+        }
+        return out;
       }
     public:
       Font(Tipe myT, FColor myFG, BColor myBG): t(myT), fg(myFG), bg(myBG) {}
