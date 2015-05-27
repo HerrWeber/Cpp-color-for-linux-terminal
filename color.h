@@ -1,3 +1,6 @@
+#ifndef COLOR_H_
+#define COLOR_H_
+
 #include <ostream>
 
  /*
@@ -73,6 +76,11 @@ namespace Color {
       Tipe t;
       FColor fg;
       BColor bg;
+
+      friend std::ostream&
+      std::ostream& print(std::ostream& out) const{
+        return out << "\E[" << f.t << ';' << f.fg << ';' << f.bg << "m";
+      }
     public:
       Font(Tipe myT, FColor myFG, BColor myBG): t(myT), fg(myFG), bg(myBG) {}
       Font(Tipe myT): t(myT), fg(FG_DEFAULT), bg(BG_DEFAULT) {}
@@ -81,7 +89,7 @@ namespace Color {
                   
       friend std::ostream&
       operator<<(std::ostream& out, const Font& f){
-        return out << "\E[" << f.t << ';' << f.fg << ';' << f.bg << "m";
+        return f.print(out);
       }
       bool operator=(const Font &f ) { 
         return (this->t = f.t && this->fg = f.fg && this->bg = f.bg);
@@ -89,6 +97,6 @@ namespace Color {
       bool operator==(const Font &f ) { 
         return (this->t == f.t && this->fg == f.fg && this->bg == f.bg);
       }
-
   };
 }
+#endif //COLOR_H_
